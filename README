@@ -1,1 +1,1 @@
-URL shortifier app written in Python for hosting on Google Appengine and serving through http://ji.rs domain
+jitourl is Python URL shortifier app for hosting on Google Appengine and serving through http://ji.rs domain
