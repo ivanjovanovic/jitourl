@@ -1,0 +1,15 @@
+application: jitourl
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /css
+  static_dir: static/css
+- url: /img
+  static_dir: static/img
+- url: /js
+  static_dir: static/js
+  
+- url: /.*
+  script: jito.py

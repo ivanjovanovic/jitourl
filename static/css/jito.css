@@ -1,0 +1,50 @@
+body {
+    margin-top: 1em;
+}
+
+h3 {
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+p {
+    padding-bottom: 1em;
+}
+
+#hd, #bd {
+    padding: 2em;
+    border: 1px solid black;
+}
+
+#bd {
+    border-top: 0;
+}
+
+#hd {
+    background-color: #CFCFCF;
+    color: #C96900;
+}
+
+.yui-g {
+    border-right: 1px solid #CFCFCF
+}
+
+label {
+    float: left;
+    width: 8em;
+    text-align: right;
+    margin: 0 0.5em 0 0;
+}
+
+form div {
+    margin-top: 0.8em;
+}
+
+input, textarea {
+    width: 23em;
+}
+
+#ft {
+    text-align:center;
+    padding-top: 0.25em;
+}
