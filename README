@@ -2,3 +2,15 @@ jitourl is Python URL shortifier app for hosting on Google Appengine and serving
 
 Author: Ivan Jovanovic
 Email: ivan.jovanovic@{gmail.com, local.ch}
+
+
+
+== Testing
+
+JiToUrl uses GAEUnit testing framework version 1.2.8 , but doesn't distribute it within the source.
+In order to run tests download GAEUnit from http://code.google.com/p/gaeunit/, copy file gaeunit.py
+to application root and visit http://localhost:8080/test, or adopt port number to your local machine settings,
+app.yaml file already has configured handler for running tests from the test/ folder.
+
+There are definitely better approaches to testing, and solutions for these approaches as well, but for the 
+purpose I need GAEUnit is enough. What is seen is that using other approaches is easily implementable as well.

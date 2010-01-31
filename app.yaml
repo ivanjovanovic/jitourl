@@ -4,12 +4,17 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /test.*
+  script: gaeunit.py
+- url: /create
+  script: create.py
+- url: /
+  script: jito.py
 - url: /css
   static_dir: static/css
 - url: /img
   static_dir: static/img
 - url: /js
   static_dir: static/js
-  
 - url: /.*
-  script: jito.py
+  script: redirect.py

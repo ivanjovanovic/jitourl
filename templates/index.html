@@ -24,12 +24,15 @@
                                     <label for="url">URL to JI*:</label>
                                     <textarea id="url" name="url" rows="3" cols="60"></textarea>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <label for="ji">Set your alias:</label><input id="ji" type="text" name="ji">
-                                </div>
+                                </div> -->
                                 <div>
                                     <label>&nbsp;</label><input type="submit" value="Create">
                                 </div>
+                                {% if shortUrl %}
+                                <div><label>Generated URL:</label><p>{{ shortUrl }}</p></div>
+                                {% endif %}
                             </form>
                         </div>
                     </div>
