@@ -34,11 +34,8 @@ class CreateShortUrl(webapp.RequestHandler):
             # if it doesn't exist, generate new mapping
             if shortcode == None:
                 # check if user provided custom alias
-                user_provided_shortcode = self.request.get('alias')
-                if user_provided_shortcode == "":
-                    shortcode = mappings.createNewMappingEntry(user_provided_url)
-                else:
-                    shortcode = mappings.createNewMappingEntry(user_provided_url, user_provided_shortcode)
+                user_provided_shortcode = self.request.get('alias', default_value = None)
+                shortcode = mappings.createNewMappingEntry(user_provided_url, user_provided_shortcode)
             
             # build short url
             server_parsed_url = urlparse(self.request.url)
