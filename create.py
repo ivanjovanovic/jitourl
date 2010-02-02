@@ -1,33 +1,52 @@
+import os
+import sys
+from urlparse import urlparse
+
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import template
-import os
+
 from model.mapping import *
-from urlparse import urlparse
+from model.revcanonical import *
 
 class CreateShortUrl(webapp.RequestHandler):
     def post(self):
         # implement validation on URL
-        url_is_valid = self.isUrlValid(self.request.get('url'))
+        user_provided_url = self.request.get('url')
+        url_is_valid = self.isUrlValid(user_provided_url)
         
         # if invalid url is given then redirect back to homepage with error message
         if url_is_valid == False:
             parsed_url = urlparse(self.request.url)
             url = "%s://%s/" % (parsed_url.scheme, parsed_url.netloc) # change to default domain where we are currently
-            self.response.headers['Content-Type'] = 'text/html'
-            self.response.set_status(303)
-            self.response.headers['Location'] = url
+            self.response.out.write("Did you really provide URL? Go back here %s and try again." % url)
             return
         
-        # check if url doesn't exist
-        mappings = MappingService()
-        shortcode = mappings.getShortcodeForUrl(self.request.get('url'))
-
-        if shortcode == None:
-            shortcode = mappings.createNewMappingEntry(self.request.get('url'))
+        # check if URL owner provided rev="canonical" link to the existing shortcut
+        revc = RevCanonical()
+        owner_provided_shorturl = revc.checkUrl(user_provided_url)
         
-        server_parsed_url = urlparse(self.request.url)
-        shortUrl = "%s://%s/%s" % (server_parsed_url.scheme, server_parsed_url.netloc, shortcode)
+        if owner_provided_shorturl == None:            
+            # check if url already exists in mappings
+            mappings = MappingService()
+            shortcode = mappings.getShortcodeForUrl(user_provided_url)
+            
+            # if it doesn't exist, generate new mapping
+            if shortcode == None:
+                # check if user provided custom alias
+                user_provided_shortcode = self.request.get('alias')
+                if user_provided_shortcode == "":
+                    shortcode = mappings.createNewMappingEntry(user_provided_url)
+                else:
+                    shortcode = mappings.createNewMappingEntry(user_provided_url, user_provided_shortcode)
+            
+            # build short url
+            server_parsed_url = urlparse(self.request.url)
+            shortUrl = "%s://%s/%s" % (server_parsed_url.scheme, server_parsed_url.netloc, shortcode)
+            
+        else:
+            shortUrl = owner_provided_shorturl
+        
         path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
         self.response.out.write(template.render(path, {'shortUrl' : shortUrl }))
 
@@ -42,6 +61,8 @@ class CreateShortUrl(webapp.RequestHandler):
 
         return True
 
+    def isShortcutValid():
+        pass
 
 application = webapp.WSGIApplication(
                                      [('/create', CreateShortUrl)],

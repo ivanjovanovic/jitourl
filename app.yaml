@@ -6,10 +6,13 @@ api_version: 1
 handlers:
 - url: /test.*
   script: gaeunit.py
+  login: admin
 - url: /create
   script: create.py
+  login: admin
 - url: /
   script: jito.py
+  login: admin
 - url: /css
   static_dir: static/css
 - url: /img

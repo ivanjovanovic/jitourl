@@ -1,9 +1,19 @@
-jitourl is Python URL shortifier app for hosting on Google Appengine and serving through http://ji.rs domain
+jitourl is Python URL shortifier app for hosting on Google Appengine
+
+Current version: 0.2
 
 Author: Ivan Jovanovic
 Email: ivan.jovanovic@{gmail.com, local.ch}
 
+== Purpose
 
+Simple easy starter application for Python and GAE. I made it for the purpose of learning Python and GAE and you
+can probably find smarter ways to use parts or whole of it.
+
+== Copyright
+
+This software is not limited by any copyright except common sense to note the original author when reusing it in
+any situation.
 
 == Testing
 
@@ -14,3 +24,13 @@ app.yaml file already has configured handler for running tests from the test/ fo
 
 There are definitely better approaches to testing, and solutions for these approaches as well, but for the 
 purpose I need GAEUnit is enough. What is seen is that using other approaches is easily implementable as well.
+
+
+== Version 0.2 features
+
+Creating shortcut on user provided URL
+Reusing already existing URL <-> Shortcode mapping
+Creating custom shortcut on user provided custom alias
+Checking for existing rev="canonical" link provided by owner of the URL to be shortened
+
+

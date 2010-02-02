@@ -1,12 +1,14 @@
-from google.appengine.ext import db
 import hashlib
-from model.counter import *
 from base64 import urlsafe_b64encode, urlsafe_b64decode
+
+from google.appengine.ext import db
+
+from model.counter import *
 
 class Mapping(db.Model):
     url = db.StringProperty()
     shortcode = db.StringProperty()
-    date = db.DateTimeProperty(auto_now_add=True)
+    date = db.DateTimeProperty(auto_now_add = True)
     
 class MappingService():
     
@@ -26,16 +28,18 @@ class MappingService():
 
         return mapping.shortcode
         
-    def createNewMappingEntry(self, url):
-        cnt = self.getCounter()
-        cnt.increment()
-        shortcode = urlsafe_b64encode("%s" % cnt.count).strip('=')
+    def createNewMappingEntry(self, url, shortcode = None):        
+        # if we didn't provide shortcode then generate one
+        if (shortcode == None):
+            cnt = self.getCounter()
+            cnt.increment()
+            shortcode = urlsafe_b64encode("%s" % cnt.count).strip('=')
 
         hasher = hashlib.md5()
         hasher.update(url)
         key = hasher.hexdigest()
         
-        map_entry = Mapping(key_name=key)
+        map_entry = Mapping(key_name = key)
         map_entry.url = url
         map_entry.shortcode = shortcode
         map_entry.put()
