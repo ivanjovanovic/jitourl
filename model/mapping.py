@@ -28,9 +28,9 @@ class MappingService():
 
         return mapping.shortcode
         
-    def createNewMappingEntry(self, url, shortcode = None):        
+    def createNewMappingEntry(self, url, shortcode = None):
         # if we didn't provide shortcode then generate one
-        if (shortcode == None):
+        if shortcode == '' or shortcode == None:
             cnt = self.getCounter()
             cnt.increment()
             shortcode = urlsafe_b64encode("%s" % cnt.count).strip('=')
